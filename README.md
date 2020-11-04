@@ -1,4 +1,5 @@
-<include a CircleCI status badge, here>
+
+[![<fbamuse>](https://circleci.com/gh/fbamuse/udacity_microservice-kubernetes.svg?style=svg)](https://github.com/fbamuse/udacity_microservice-kubernetes)
 
 ## Project Overview
 
