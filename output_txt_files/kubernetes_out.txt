@@ -172,5 +172,27 @@ fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ m
 fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ 
 
 
+fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ /home/fukuhara/DevOps_Microservices/project-ml-microservice-kubernetes/run_kubernetes.sh
+Flag --generator has been deprecated, has no effect and will be removed in the future.
+Error from server (AlreadyExists): pods "make-pred" already exists
+NAME        READY   STATUS    RESTARTS   AGE
+make-pred   1/1     Running   1          10h
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
+
+
+fukuhara@instance-2:~/DevOps_Microservices$ /home/fukuhara/DevOps_Microservices/project-ml-microservice-kubernetes/make_prediction.sh
+Port: 8000
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
+fukuhara@instance-2:~/DevOps_Microservices$ 
+
+
+
+
 
 
