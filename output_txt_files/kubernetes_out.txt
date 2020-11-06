@@ -1,8 +1,176 @@
-fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ ./run_kubernetes.sh
-Flag --generator has been deprecated, has no effect and will be removed in the future.
-Error from server (AlreadyExists): pods "make-pred" already exists
-NAME        READY   STATUS    RESTARTS   AGE
-make-pred   1/1     Running   1          6m38s
-Forwarding from 127.0.0.1:8000 -> 80
-Forwarding from [::1]:8000 -> 80
-Handling connection for 8000
+fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ docker images
+REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE
+myapp                 latest              bad9c8554307        10 hours ago        1.25GB
+bamuse/udacity_pro4   latest              bad9c8554307        10 hours ago        1.25GB
+python                3.7.3-stretch       34a518642c76        17 months ago       929MB
+fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ docker rmi $(docker images -q )
+Error response from daemon: conflict: unable to delete bad9c8554307 (must be forced) - image is referenced in multiple repositories
+Error response from daemon: conflict: unable to delete bad9c8554307 (must be forced) - image is referenced in multiple repositories
+Error response from daemon: conflict: unable to delete 34a518642c76 (cannot be forced) - image has dependent child images
+fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ docker rmi $(docker images -q ) -f
+Untagged: bamuse/udacity_pro4:latest
+Untagged: bamuse/udacity_pro4@sha256:aa04956c8a3da7599bc37b22194d4673a890d7eda3b4342f2bfa749d81dc2af9
+Untagged: myapp:latest
+Deleted: sha256:bad9c8554307e3cbfbb38eb22fa8b8aa1b61e7f61f40ea4410a092ad104cd7c2
+Deleted: sha256:e565f944ce7cf87c0ef626885469f90dd39703812efcad16235e138c00e82e26
+Deleted: sha256:6be9430fbac48e1a47041e121a3917a6c9ba196365813dcc86318cb624a8a0ac
+Deleted: sha256:f2238a95081dd69b10b03a3beada6958ad3e5177e54f4c0ab7ea2b8dc548a0ee
+Deleted: sha256:b983400127849e2f1241ccb23b7e1f1d06e9a02d5184cec9d1e2de032087e77f
+Deleted: sha256:d1902d6442d12737d0ffc1a490cc0defe5d7f75071d386f1e00c1e6cb2abcf93
+Deleted: sha256:83e684b01f7bc22c1b6a5de30cd683345c4ff3025b35f76021663c5809078dc7
+Deleted: sha256:dd4ce8a803a4316144024d512b5c43dae4c1027227f05fc07af68bad03088185
+Untagged: python:3.7.3-stretch
+Untagged: python@sha256:205cafadbb7f0c48f2a6d655eb100a9675aa85e6e73958860f488406cce09779
+Deleted: sha256:34a518642c76e77f0cace72bd993352ac99802c3295931f70a407b735ecb6e27
+Deleted: sha256:c8241f3908daf21a87e6a757787548dd3ddd0f0811a00a354e0cc0ee4cf5dac4
+Deleted: sha256:f8be1b3c8a18481484cde29117880c23fd2bc18435ec995844e0007816b859b7
+Deleted: sha256:dd6ae79e31b9520036e89cac11a7e437222c782c6eceec676b7a41ee4fcd49ae
+Deleted: sha256:f117342581b4f421c8ae547a7bbd28faca1a77f6663f9e2cd27fc48148fceb12
+Deleted: sha256:9f09ec5dca6f55dd0d01b4134842b4c1b353d6d627711174c1b2d06a0b1c0d8f
+Deleted: sha256:81bea2e4eb39ed9ed1ceb0e8ca05cefbdc96bd0b38266c26990c1eb0ed528612
+Deleted: sha256:5707f840eb6421a463261e9f62c9fcc691facd718993a666d5c86751ebb57cc3
+Deleted: sha256:706c0c43e07bd77aba42160b0d0158297caec76c4da6566d856f28b1754f2265
+Deleted: sha256:0db06dff9d9aeb9bed4edde7bd772ad0f3aea497c129d48ed587664d098c6c41
+Error: No such image: bad9c8554307
+fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ /home/fukuhara/DevOps_Microservices/project-ml-microservice-kubernetes/run_docker.sh
+Sending build context to Docker daemon  1.202MB
+Step 1/6 : FROM python:3.7.3-stretch
+3.7.3-stretch: Pulling from library/python
+6f2f362378c5: Pull complete 
+494c27a8a6b8: Pull complete 
+7596bb83081b: Pull complete 
+372744b62d49: Pull complete 
+615db220d76c: Pull complete 
+39aa0c89bda1: Pull complete 
+ac275157d894: Pull complete 
+98d16dec829a: Pull complete 
+c8514b1c6524: Pull complete 
+Digest: sha256:205cafadbb7f0c48f2a6d655eb100a9675aa85e6e73958860f488406cce09779
+Status: Downloaded newer image for python:3.7.3-stretch
+ ---> 34a518642c76
+Step 2/6 : WORKDIR /app
+ ---> Running in 362ec9543155
+Removing intermediate container 362ec9543155
+ ---> ea85ef9ec299
+Step 3/6 : COPY . app.py /app/
+ ---> 36348cf39e0a
+Step 4/6 : RUN pip install --upgrade pip &&    pip install --trusted-host pypi.python.org -r requirements.txt
+ ---> Running in d5a3f2082be2
+Collecting pip
+  Downloading https://files.pythonhosted.org/packages/cb/28/91f26bd088ce8e22169032100d4260614fc3da435025ff389ef1d396a433/pip-20.2.4-py2.py3-none-any.whl (1.5MB)
+Installing collected packages: pip
+  Found existing installation: pip 19.1.1
+    Uninstalling pip-19.1.1:
+      Successfully uninstalled pip-19.1.1
+Successfully installed pip-20.2.4
+Collecting Click==7.0
+  Downloading Click-7.0-py2.py3-none-any.whl (81 kB)
+Collecting Flask==1.0.2
+  Downloading Flask-1.0.2-py2.py3-none-any.whl (91 kB)
+Collecting itsdangerous==1.1.0
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting Jinja2==2.10.3
+  Downloading Jinja2-2.10.3-py2.py3-none-any.whl (125 kB)
+Collecting MarkupSafe==1.1.1
+  Downloading MarkupSafe-1.1.1-cp37-cp37m-manylinux1_x86_64.whl (27 kB)
+Collecting numpy==1.17.2
+  Downloading numpy-1.17.2-cp37-cp37m-manylinux1_x86_64.whl (20.3 MB)
+Collecting pandas==0.24.2
+  Downloading pandas-0.24.2-cp37-cp37m-manylinux1_x86_64.whl (10.1 MB)
+Collecting python-dateutil==2.8.1
+  Downloading python_dateutil-2.8.1-py2.py3-none-any.whl (227 kB)
+Collecting pytz==2019.3
+  Downloading pytz-2019.3-py2.py3-none-any.whl (509 kB)
+Collecting scikit-learn==0.20.3
+  Downloading scikit_learn-0.20.3-cp37-cp37m-manylinux1_x86_64.whl (5.4 MB)
+Collecting scipy==1.3.1
+  Downloading scipy-1.3.1-cp37-cp37m-manylinux1_x86_64.whl (25.2 MB)
+Collecting six==1.12.0
+  Downloading six-1.12.0-py2.py3-none-any.whl (10 kB)
+Collecting Werkzeug==0.16.0
+  Downloading Werkzeug-0.16.0-py2.py3-none-any.whl (327 kB)
+Collecting pylint==2.6.0
+  Downloading pylint-2.6.0-py3-none-any.whl (325 kB)
+Collecting mccabe<0.7,>=0.6
+  Downloading mccabe-0.6.1-py2.py3-none-any.whl (8.6 kB)
+Collecting isort<6,>=4.2.5
+  Downloading isort-5.6.4-py3-none-any.whl (98 kB)
+Collecting astroid<=2.5,>=2.4.0
+  Downloading astroid-2.4.2-py3-none-any.whl (213 kB)
+Collecting toml>=0.7.1
+  Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+Collecting lazy-object-proxy==1.4.*
+  Downloading lazy_object_proxy-1.4.3-cp37-cp37m-manylinux1_x86_64.whl (56 kB)
+Collecting wrapt~=1.11
+  Downloading wrapt-1.12.1.tar.gz (27 kB)
+Collecting typed-ast<1.5,>=1.4.0; implementation_name == "cpython" and python_version < "3.8"
+  Downloading typed_ast-1.4.1-cp37-cp37m-manylinux1_x86_64.whl (737 kB)
+Building wheels for collected packages: wrapt
+  Building wheel for wrapt (setup.py): started
+  Building wheel for wrapt (setup.py): finished with status 'done'
+  Created wheel for wrapt: filename=wrapt-1.12.1-cp37-cp37m-linux_x86_64.whl size=71573 sha256=3530e511d5d3d0c59b7efc228a41a05c5b90a6fc10f50ea773109ccc38620bb3
+  Stored in directory: /root/.cache/pip/wheels/62/76/4c/aa25851149f3f6d9785f6c869387ad82b3fd37582fa8147ac6
+Successfully built wrapt
+Installing collected packages: Click, Werkzeug, itsdangerous, MarkupSafe, Jinja2, Flask, numpy, six, python-dateutil, pytz, pandas, scipy, scikit-learn, mccabe, isort, lazy-object-proxy, wrapt, typed-ast, astroid, toml, pylint
+Successfully installed Click-7.0 Flask-1.0.2 Jinja2-2.10.3 MarkupSafe-1.1.1 Werkzeug-0.16.0 astroid-2.4.2 isort-5.6.4 itsdangerous-1.1.0 lazy-object-proxy-1.4.3 mccabe-0.6.1 numpy-1.17.2 pandas-0.24.2 pylint-2.6.0 python-dateutil-2.8.1 pytz-2019.3 scikit-learn-0.20.3 scipy-1.3.1 six-1.12.0 toml-0.10.2 typed-ast-1.4.1 wrapt-1.12.1
+Removing intermediate container d5a3f2082be2
+ ---> 43850d9afe08
+Step 5/6 : EXPOSE 80/tcp
+ ---> Running in 3b3f8c169b55
+Removing intermediate container 3b3f8c169b55
+ ---> 90140813a7b3
+Step 6/6 : CMD ["python3","/app/app.py"]
+ ---> Running in a359124ca602
+Removing intermediate container a359124ca602
+ ---> 8a044148f37c
+Successfully built 8a044148f37c
+Successfully tagged myapp:latest
+REPOSITORY          TAG                 IMAGE ID            CREATED                  SIZE
+myapp               latest              8a044148f37c        Less than a second ago   1.25GB
+python              3.7.3-stretch       34a518642c76        17 months ago            929MB
+
+
+
+fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ /home/fukuhara/DevOps_Microservices/project-ml-microservice-kubernetes/upload_docker.sh
+Password: 
+WARNING! Your password will be stored unencrypted in /home/fukuhara/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+Docker ID and Image: bamuse/udacity_pro4
+The push refers to repository [docker.io/bamuse/udacity_pro4]
+b235ad6d2ffc: Pushed 
+ded8421d9005: Pushed 
+7009f1029025: Pushed 
+799a7872c8c7: Layer already exists 
+715450468940: Layer already exists 
+c9d608035aef: Layer already exists 
+bb9c02680a15: Layer already exists 
+a637c551a0da: Layer already exists 
+2c8d31157b81: Layer already exists 
+7b76d801397d: Layer already exists 
+f32868cde90b: Layer already exists 
+0db06dff9d9a: Layer already exists 
+latest: digest: sha256:9893eba8a029a5f6b184dc3625115ad38fcc4f9842ef29df604eb3544a4ebfa6 size: 2848
+
+
+
+fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ minikube start
+😄  Ubuntu 18.04 上の minikube v1.14.2
+✨  プロフィールを元に、 docker ドライバを使用します
+👍  コントロールプレーンのノード minikube を minikube 上で起動しています
+🚜  Pulling base image ...
+🤷  docker 「 minikube 」 container がありません。再生成します。
+🔥  docker container (CPUs=2, Memory=3700MB) を作成しています...
+🐳  Docker 19.03.8 で Kubernetes v1.19.2 を準備しています...
+🔎  Kubernetes コンポーネントを検証しています...
+🌟  有効なアドオン: storage-provisioner, default-storageclass
+🏄  Done! kubectl is now configured to use "minikube" by default
+fukuhara@instance-2:~/DevOps_Microservices/project-ml-microservice-kubernetes$ 
+
+
+
+
